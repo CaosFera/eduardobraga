@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Galeria Hidráulica · Eduardo Braga</title>
+  <meta name="description" content="Galeria de serviços hidráulicos industriais realizados por Eduardo Braga." />
+  <meta name="theme-color" content="#0a192f" />
+
+  <!-- Font Awesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    /* ===== MESMO ESTILO DA PÁGINA PRINCIPAL ===== */
+    :root {
+      --azul-escuro: #0a192f;
+      --azul-medio: #112240;
+      --azul-claro: #1a365d;
+      --cinza-claro: #e6f1ff;
+      --cinza-texto: #8892b0;
+      --branco: #f0f4fa;
+      --detalhe: #f39c12;
+      --detalhe-hover: #e67e22;
+      --detalhe-suave: rgba(243, 156, 18, 0.15);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--azul-escuro);
+      color: var(--cinza-claro);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4, h5 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+    }
+
+    ::selection {
+      background: var(--detalhe);
+      color: #000;
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--azul-escuro);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--detalhe);
+      border-radius: 10px;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar-custom {
+      background: rgba(10, 25, 47, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(243, 156, 18, 0.2);
+      padding: 12px 0;
+      transition: 0.3s;
+    }
+    .navbar-custom .nav-link {
+      color: var(--cinza-texto) !important;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 8px 16px !important;
+      transition: 0.3s;
+      position: relative;
+    }
+    .navbar-custom .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: var(--detalhe);
+      transition: 0.3s;
+      transform: translateX(-50%);
+    }
+    .navbar-custom .nav-link:hover {
+      color: var(--branco) !important;
+    }
+    .navbar-custom .nav-link:hover::after {
+      width: 60%;
+    }
+    .navbar-custom .nav-link.active {
+      color: var(--detalhe) !important;
+    }
+    .navbar-custom .nav-link.active::after {
+      width: 60%;
+    }
+    .btn-whatsapp-nav {
+      background: #25d366;
+      color: #000 !important;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 8px 20px;
+      border-radius: 50px;
+      transition: 0.3s;
+    }
+    .btn-whatsapp-nav:hover {
+      background: #20b859;
+      transform: scale(1.03);
+      color: #000 !important;
+    }
+
+    /* ===== GALERIA ===== */
+    .section-padding {
+      padding: 100px 0 80px;
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--branco);
+    }
+    .section-title span {
+      color: var(--detalhe);
+    }
+    .section-subtitle {
+      color: var(--cinza-texto);
+      font-size: 1rem;
+      font-weight: 300;
+      max-width: 600px;
+    }
+    .section-badge {
+      display: inline-block;
+      background: var(--detalhe-suave);
+      color: var(--detalhe);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      padding: 4px 14px;
+      border-radius: 50px;
+      margin-bottom: 1rem;
+    }
+
+    /* ===== ITENS DA GALERIA ===== */
+    .galeria-item {
+      position: relative;
+      border-radius: 16px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(243, 156, 18, 0.1);
+      transition: 0.4s;
+      aspect-ratio: 4/3;
+      background: var(--azul-medio);
+    }
+    .galeria-item:hover {
+      transform: scale(1.03);
+      border-color: var(--detalhe);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    }
+    .galeria-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.4s;
+    }
+    .galeria-item:hover img {
+      transform: scale(1.05);
+    }
+    .galeria-item .overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(10, 25, 47, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: 0.3s;
+      backdrop-filter: blur(2px);
+    }
+    .galeria-item:hover .overlay {
+      opacity: 1;
+    }
+    .galeria-item .overlay i {
+      color: var(--detalhe);
+      font-size: 2.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      border-radius: 50%;
+      padding: 16px;
+      border: 2px solid var(--detalhe);
+    }
+
+    /* Fallback para imagens que não carregam */
+    .galeria-item img.error {
+      display: none;
+    }
+    .galeria-item .fallback {
+      display: none;
+      width: 100%;
+      height: 100%;
+      background: var(--azul-medio);
+      color: var(--cinza-texto);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 20px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .galeria-item .fallback i {
+      font-size: 2rem;
+      color: var(--detalhe);
+    }
+    .galeria-item img.error + .fallback {
+      display: flex;
+    }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb-custom {
+      color: var(--cinza-texto);
+      font-size: 0.85rem;
+      font-weight: 300;
+    }
+    .breadcrumb-custom a {
+      color: var(--detalhe);
+      text-decoration: none;
+      transition: 0.3s;
+    }
+    .breadcrumb-custom a:hover {
+      color: var(--detalhe-hover);
+    }
+
+    /* ===== MODAL CARROSSEL ===== */
+    .modal-gallery .modal-content {
+      background: rgba(10, 25, 47, 0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(243, 156, 18, 0.2);
+      border-radius: 20px;
+    }
+    .modal-gallery .modal-header {
+      border-bottom: 1px solid rgba(243, 156, 18, 0.1);
+    }
+    .modal-gallery .modal-header .btn-close {
+      filter: invert(1);
+    }
+    .modal-gallery .carousel-inner {
+      border-radius: 12px;
+    }
+    .modal-gallery .carousel-item img {
+      max-height: 70vh;
+      object-fit: contain;
+      width: 100%;
+      background: var(--azul-escuro);
+    }
+    .modal-gallery .carousel-control-prev,
+    .modal-gallery .carousel-control-next {
+      width: 10%;
+      opacity: 0.7;
+    }
+    .modal-gallery .carousel-control-prev:hover,
+    .modal-gallery .carousel-control-next:hover {
+      opacity: 1;
+    }
+    .modal-gallery .carousel-indicators {
+      bottom: -40px;
+    }
+    .modal-gallery .carousel-indicators button {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--cinza-texto);
+      border: none;
+      margin: 0 5px;
+    }
+    .modal-gallery .carousel-indicators button.active {
+      background: var(--detalhe);
+    }
+    .modal-gallery .carousel-caption {
+      background: rgba(10, 25, 47, 0.7);
+      border-radius: 12px;
+      padding: 12px 20px;
+      bottom: 20px;
+      left: 20%;
+      right: 20%;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(243, 156, 18, 0.1);
+    }
+    .modal-gallery .carousel-caption p {
+      margin: 0;
+      color: var(--branco);
+      font-weight: 300;
+      font-size: 0.9rem;
+    }
+
+    /* ===== WHATSAPP FLOAT ===== */
+    .whatsapp-float {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000;
+      font-size: 2rem;
+      box-shadow: 0 10px 40px rgba(37, 211, 102, 0.4);
+      transition: 0.3s;
+      text-decoration: none;
+      animation: pulse-wa 2.5s ease-in-out infinite;
+    }
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+      color: #000;
+    }
+    @keyframes pulse-wa {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.5); }
+      50% { box-shadow: 0 0 0 16px rgba(37, 211, 102, 0); }
+    }
+
+    /* ===== BACK TO TOP ===== */
+    .back-to-top {
+      position: fixed;
+      bottom: 100px;
+      right: 28px;
+      z-index: 999;
+      width: 44px;
+      height: 44px;
+      background: var(--detalhe);
+      color: #000;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.3s;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(243, 156, 18, 0.3);
+    }
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    .back-to-top:hover {
+      background: var(--detalhe-hover);
+      transform: translateY(-4px);
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--azul-escuro);
+      border-top: 1px solid rgba(243, 156, 18, 0.08);
+      padding: 40px 0 20px;
+    }
+    .footer a {
+      color: var(--cinza-texto);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    .footer a:hover {
+      color: var(--detalhe);
+    }
+    .footer .social-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(243, 156, 18, 0.08);
+      border: 1px solid rgba(243, 156, 18, 0.15);
+      color: var(--cinza-texto);
+      transition: 0.3s;
+    }
+    .footer .social-link:hover {
+      background: var(--detalhe);
+      color: #000;
+      transform: translateY(-3px);
+    }
+
+    /* ===== RESPONSIVO ===== */
+    @media (max-width: 768px) {
+      .section-padding {
+        padding: 80px 0 50px;
+      }
+      .modal-gallery .carousel-caption {
+        left: 10%;
+        right: 10%;
+        bottom: 10px;
+        padding: 8px 12px;
+      }
+      .modal-gallery .carousel-caption p {
+        font-size: 0.75rem;
+      }
+      .galeria-item .overlay i {
+        font-size: 1.8rem;
+        padding: 12px;
+      }
+    }
+
+    /* ===== BOTÃO PERSONALIZADO ===== */
+    .btn-primary-custom {
+      background: var(--detalhe);
+      color: #000;
+      font-weight: 700;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 14px 32px;
+      border-radius: 50px;
+      border: none;
+      transition: 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-primary-custom:hover {
+      background: var(--detalhe-hover);
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+    <div class="container">
+      <a class="navbar-brand text-white fw-bold d-flex align-items-center gap-2" href="index.html">
+        <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1.3rem;">
+          Eduardo <span style="color: var(--detalhe);">Braga</span>
+        </span>
+        <small style="font-size: 0.55rem; color: var(--cinza-texto); font-weight: 400; letter-spacing: 0.1em; background: rgba(243,156,18,0.1); padding: 2px 10px; border-radius: 50px; border: 1px solid rgba(243,156,18,0.15);">
+          TÉCNICO INDUSTRIAL
+        </small>
+      </a>
+      <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="color: var(--branco);">
+        <i class="fas fa-bars" style="font-size: 1.4rem;"></i>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-1">
+          <li class="nav-item"><a class="nav-link" href="index.html#hero">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#sobre">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link active" href="index.html#servicos">Serviços</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#galeria">Galeria</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#diferenciais">Diferenciais</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#faq">FAQ</a></li>
+          <li class="nav-item"><a class="nav-link" href="index.html#contato">Contato</a></li>
+          <li class="nav-item ms-lg-2">
+            <a href="https://wa.me/557187925263?text=Ol%C3%A1%20Eduardo!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20industrial." target="_blank" class="btn-whatsapp-nav d-inline-flex align-items-center gap-2">
+              <i class="fab fa-whatsapp"></i> Orçamento
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== GALERIA HIDRÁULICA ===== -->
+  <section class="section-padding">
+    <div class="container">
+      <!-- Breadcrumb -->
+      <div class="breadcrumb-custom mb-4">
+        <a href="index.html"><i class="fas fa-home"></i> Início</a>
+        <span style="color: var(--cinza-texto); margin: 0 8px;">/</span>
+        <a href="index.html#servicos">Serviços</a>
+        <span style="color: var(--cinza-texto); margin: 0 8px;">/</span>
+        <span style="color: var(--branco);">Hidráulica Industrial</span>
+      </div>
+
+      <div class="text-center mb-5">
+        <span class="section-badge"><i class="fas fa-oil-can me-1"></i> Especialidade</span>
+        <h1 class="section-title">Hidráulica <span>Industrial</span></h1>
+        <p class="section-subtitle mx-auto">
+          Galeria de fotos reais de serviços de manutenção, diagnóstico e reparo em sistemas hidráulicos industriais.
+        </p>
+      </div>
+
+      <div class="row g-4" id="galeriaHidraulica">
+        <!-- Script vai gerar as 20 imagens dinamicamente -->
+      </div>
+
+      <div class="text-center mt-5">
+        <p style="color: var(--cinza-texto); font-weight: 300;">
+          <i class="fas fa-camera" style="color: var(--detalhe);"></i>
+          Fotos reais de serviços executados. Clique em qualquer imagem para ampliar.
+        </p>
+        <a href="https://wa.me/557187925263?text=Ol%C3%A1%20Eduardo!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20hidr%C3%A1ulica." target="_blank" class="btn-primary-custom">
+          <i class="fab fa-whatsapp"></i> Solicitar orçamento
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MODAL CARROSSEL ===== -->
+  <div class="modal fade modal-gallery" id="carouselModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+      <div class="modal-content">
+        <div class="modal-header border-0" style="padding: 0.8rem 1.5rem;">
+          <h5 class="modal-title" style="color: var(--branco); font-weight: 700;">
+            <i class="fas fa-oil-can" style="color: var(--detalhe);"></i> Hidráulica Industrial
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" style="filter: invert(1);"></button>
+        </div>
+        <div class="modal-body" style="padding: 0.5rem 0 2.5rem 0;">
+          <div id="carouselGaleria" class="carousel slide" data-bs-interval="false">
+            <!-- Indicadores -->
+            <div class="carousel-indicators" id="carouselIndicators" style="position: relative; margin-top: 10px; bottom: auto; flex-wrap: wrap; gap: 4px;">
+              <!-- Gerado via JavaScript -->
+            </div>
+
+            <div class="carousel-inner" id="carouselInner">
+              <!-- Gerado via JavaScript -->
+            </div>
+
+            <!-- Controles -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselGaleria" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselGaleria" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Próximo</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-md-4">
+          <h5 style="color: var(--branco); font-weight: 700; font-size: 1.1rem;">
+            Eduardo <span style="color: var(--detalhe);">Braga</span>
+          </h5>
+          <p style="color: var(--cinza-texto); font-weight: 300; font-size: 0.85rem;">
+            Técnico Multidisciplinar Industrial · Manutenção, instalação e diagnóstico.
+          </p>
+          <div class="d-flex gap-2">
+            <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="social-link"><i class="fas fa-envelope"></i></a>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <h6 style="color: var(--branco); font-weight: 600; font-size: 0.85rem;">Serviços</h6>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li><a href="index.html#servicos">Elétrica Industrial</a></li>
+            <li><a href="index.html#servicos">Eletrônica Industrial</a></li>
+            <li><a href="index.html#servicos">Mecânica Industrial</a></li>
+            <li><a href="index.html#servicos">Hidráulica Industrial</a></li>
+          </ul>
+        </div>
+        <div class="col-md-2">
+          <h6 style="color: var(--branco); font-weight: 600; font-size: 0.85rem;">Links</h6>
+          <ul style="list-style: none; padding: 0; margin: 0;">
+            <li><a href="index.html#sobre">Sobre</a></li>
+            <li><a href="index.html#galeria">Galeria</a></li>
+            <li><a href="index.html#diferenciais">Diferenciais</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+          </ul>
+        </div>
+        <div class="col-md-3">
+          <h6 style="color: var(--branco); font-weight: 600; font-size: 0.85rem;">Atendimento</h6>
+          <p style="color: var(--cinza-texto); font-weight: 300; font-size: 0.85rem; margin: 0;">
+            <i class="fas fa-map-marker-alt" style="color: var(--detalhe);"></i> Salvador - Bahia
+          </p>
+          <p style="color: var(--cinza-texto); font-weight: 300; font-size: 0.85rem; margin: 0;">
+            <i class="fas fa-clock" style="color: var(--detalhe);"></i> Seg–Sáb, 8h–18h
+          </p>
+        </div>
+      </div>
+      <hr style="border-color: rgba(243,156,18,0.08); margin: 30px 0 20px;" />
+      <div class="text-center">
+        <p style="color: var(--cinza-texto); font-weight: 300; font-size: 0.75rem; margin: 0;">
+          © 2025 Eduardo Braga · Técnico Multidisciplinar Industrial · Todos os direitos reservados.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== WHATSAPP FLOAT ===== -->
+  <a href="https://wa.me/557187925263?text=Ol%C3%A1%20Eduardo!%20Gostaria%20de%20um%20or%C3%A7amento%20para%20manuten%C3%A7%C3%A3o%20industrial." target="_blank" class="whatsapp-float" aria-label="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+
+  <!-- ===== BACK TO TOP ===== -->
+  <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+
+  <!-- ===== SCRIPTS ===== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ===== CONFIGURAÇÃO DAS IMAGENS =====
+    const totalImagens = 20;
+    const pastaImagens = 'img/';
+    const prefixo = 'hidraulica';
+    const extensao = '.jpeg';
+
+    // Legendas para cada imagem
+    const legendas = [
+      'Manutenção hidráulica industrial · Diagnóstico e reparo',
+      'Inspeção e manutenção de cilindros hidráulicos',
+      'Válvulas hidráulicas · Limpeza e regulagem',
+      'Unidade hidráulica · Manutenção preventiva',
+      'Bombas hidráulicas · Reforma e recuperação',
+      'Diagnóstico técnico em campo · Identificação de falhas',
+      'Manutenção preventiva · Prolongando a vida útil',
+      'Peças e componentes · Qualidade e precisão',
+      'Equipamentos hidráulicos · Montagem e ajustes',
+      'Manutenção industrial hidráulica · Soluções completas',
+      'Sistema hidráulico · Diagnóstico e otimização',
+      'Recuperação de componentes · Economia e eficiência',
+      'Manutenção de bombas hidráulicas industriais',
+      'Válvulas direcionais · Inspeção e reparo',
+      'Cilindros hidráulicos · Reconstrução completa',
+      'Unidade hidráulica · Substituição de componentes',
+      'Diagnóstico de falhas em sistemas hidráulicos',
+      'Manutenção corretiva · Reparo emergencial',
+      'Montagem de sistema hidráulico industrial',
+      'Teste e comissionamento de equipamentos hidráulicos'
+    ];
+
+    // ===== GERAR GALERIA =====
+    function gerarGaleria() {
+      const container = document.getElementById('galeriaHidraulica');
+      let html = '';
+
+      for (let i = 1; i <= totalImagens; i++) {
+        const num = i.toString().padStart(1, '0');
+        const src = pastaImagens + prefixo + i + extensao;
+        const legenda = legendas[i - 1] || `Serviço hidráulico ${i}`;
+        const slideIndex = i - 1;
+
+        html += `
+          <div class="col-lg-3 col-md-4 col-6">
+            <div class="galeria-item" data-bs-toggle="modal" data-bs-target="#carouselModal" data-slide="${slideIndex}">
+              <img src="${src}" alt="${legenda}" onerror="this.classList.add('error')" />
+              <div class="fallback">
+                <i class="fas fa-oil-can"></i>
+                <span>Hidráulica ${i}</span>
+                <small style="color: var(--cinza-texto);">Clique para ampliar</small>
+              </div>
+              <div class="overlay"><i class="fas fa-expand"></i></div>
+            </div>
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+    }
+
+    // ===== GERAR CARROSSEL =====
+    function gerarCarrossel() {
+      const inner = document.getElementById('carouselInner');
+      const indicators = document.getElementById('carouselIndicators');
+      let slidesHtml = '';
+      let indicatorsHtml = '';
+
+      for (let i = 0; i < totalImagens; i++) {
+        const num = i + 1;
+        const src = pastaImagens + prefixo + num + extensao;
+        const legenda = legendas[i] || `Serviço hidráulico ${num}`;
+        const active = i === 0 ? 'active' : '';
+
+        slidesHtml += `
+          <div class="carousel-item ${active}">
+            <img src="${src}" class="d-block w-100" alt="${legenda}" onerror="this.style.display='none'" />
+            <div class="carousel-caption">
+              <p>${legenda}</p>
+            </div>
+          </div>
+        `;
+
+        indicatorsHtml += `
+          <button type="button" data-bs-target="#carouselGaleria" data-bs-slide-to="${i}" ${i === 0 ? 'class="active" aria-current="true"' : ''}></button>
+        `;
+      }
+
+      inner.innerHTML = slidesHtml;
+      indicators.innerHTML = indicatorsHtml;
+    }
+
+    // ===== BACK TO TOP =====
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        backToTop.classList.add('visible');
+      } else {
+        backToTop.classList.remove('visible');
+      }
+    });
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ===== MODAL CARROSSEL - ABRIR NO SLIDE CORRETO =====
+    document.addEventListener('DOMContentLoaded', function() {
+      // Gerar conteúdo dinâmico
+      gerarGaleria();
+      gerarCarrossel();
+
+      const modal = document.getElementById('carouselModal');
+      const carousel = document.getElementById('carouselGaleria');
+
+      modal.addEventListener('show.bs.modal', function(event) {
+        const trigger = event.relatedTarget;
+        const slideIndex = parseInt(trigger.getAttribute('data-slide')) || 0;
+
+        setTimeout(() => {
+          const carouselInstance = bootstrap.Carousel.getInstance(carousel);
+          if (carouselInstance) {
+            carouselInstance.to(slideIndex);
+          }
+        }, 100);
+      });
+
+      modal.addEventListener('hidden.bs.modal', function() {
+        const carouselInstance = bootstrap.Carousel.getInstance(carousel);
+        if (carouselInstance) {
+          carouselInstance.to(0);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
